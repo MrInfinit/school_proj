@@ -46,17 +46,20 @@ def sales_world():
         sum = 0
         for i in range(no_of_rows):
             if j == vg_df.at[i,'Genre']:
-                num = round((vg_df.at[i,'Total_Sales']),2)
+                num = int(vg_df.at[i,'Total_Sales'])
                 sum += num
         total_sales_list.append(sum)
+
+    colors_list = ['blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'gray', 'olive', 'cyan', 'Indigo','LightSeaGreen', 'Aqua', 'CadetBlue']
     
     while True:
         print('=============================================================')
         print('1. Display Data in the form of a line graph')
         print('2. Display Data in the form of a bar graph')
         print('3. Display Data in the form of a pie chart')
-        print('4. Display all the graphs at once')
-        print('5. Return to main program')
+        print('4. Display Data in the form of a scatterplot')
+        print('5. Display all the graphs at once')
+        print('6. Return to main program')
         print('=============================================================')
         choice = eval(input('choose option: '))
         print('=============================================================')
@@ -65,21 +68,33 @@ def sales_world():
             plt.plot(genre_list,total_sales_list)
             plt.show()
         elif choice == 2:
-            plt.bar(genre_list, total_sales_list, width=0.5)
+            plt.bar(genre_list, total_sales_list, width=0.5, label = genre_list, color=colors_list)
+            plt.legend()
             plt.show()
-        elif choice == 3:
-            sum = 0
-            percent_list = []
-            for i in total_sales_list:
-                sum += i
-            for i in total_sales_list:
-                value = 0
-                value = round((i*100/sum), 2)
-                percent_list.append(value)
-            
-            plt.pie(total_sales_list, startangle=90)
+        elif choice == 3:        
+            plt.pie(total_sales_list, colors=colors_list)
+            plt.legend(genre_list, loc = 'upper right')
             plt.show()
+        elif choice == 4:
+                plt.scatter(genre_list, total_sales_list, c=colors_list)
+                plt.show()
         elif choice == 5:
+            plt.subplot(2,2,1)
+            plt.plot(genre_list,total_sales_list)
+            
+            plt.subplot(2,2,2)
+            plt.bar(genre_list, total_sales_list, width=0.5, label = genre_list, color=colors_list)
+            plt.legend()
+            
+            plt.subplot(2,2,3)
+            plt.pie(total_sales_list, colors=colors_list)
+            plt.legend(genre_list, loc = 'upper right')
+            
+            plt.subplot(2,2,4)
+            plt.scatter(genre_list, total_sales_list, c=colors_list)
+            
+            plt.show()
+        elif choice == 6:
             return
         else: 
             pass
