@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -19,8 +18,64 @@ for i in range(no_of_rows):
     if vg_df.at[i,'Genre'] not in genre_list:
         genre_list.append(vg_df.at[i,'Genre'])
 
+
+#Creating a List of total sales per genre
+world_sales_list = []
+for j in genre_list:
+    sum = 0
+    for i in range(no_of_rows):
+        if j == vg_df.at[i,'Genre']:
+            num = int(vg_df.at[i,'Total_Sales'])
+            sum += num
+    world_sales_list.append(sum)
+            
+#Creating a List of sales in north america per genre
+NA_sales_list = []
+for j in genre_list:
+    sum = 0
+    for i in range(no_of_rows):
+        if j == vg_df.at[i,'Genre']:
+            num = round((vg_df.at[i,'NA_Sales']),2)
+            sum += num
+    NA_sales_list.append(sum)
+
+#Creating a List of sales in japan per genre
+JP_sales_list = []
+for j in genre_list:
+    sum = 0
+    for i in range(no_of_rows):
+        if j == vg_df.at[i,'Genre']:
+            num = round((vg_df.at[i,'JP_Sales']),2)
+            sum += num
+    JP_sales_list.append(sum)
+
+#Creating a List of sales in europe and africa per genre
+PAL_sales_list = []
+for j in genre_list:
+    sum = 0
+    for i in range(no_of_rows):
+        if j == vg_df.at[i,'Genre']:
+            num = round((vg_df.at[i,'PAL_Sales']),2)
+            sum += num
+    PAL_sales_list.append(sum)
+            
+#Creating a list of sales in other parts of the world per genre
+other_sales_list = []
+for j in genre_list:
+    sum = 0
+    for i in range(no_of_rows):
+        if j == vg_df.at[i,'Genre']:
+            num = round((vg_df.at[i,'Other_Sales']),2)
+            sum += num
+    other_sales_list.append(sum)
+
+
+#List for the colors required in the graphs
+colors_list = ['blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'gray', 'olive', 'cyan', 'Indigo','LightSeaGreen', 'Aqua', 'CadetBlue']
+
+#Creating functions that can be run from the options panel
 def readcsv():
-    print(vg_df)
+    print(vg_df.head(10))
 
 def abbriviations():
     print(ab_df)
@@ -35,23 +90,11 @@ def critic_score_sort():
                 sum =+ vg_df.at[i,'Critic_Score']
         critic_score_list.append(sum)
 
-    plt.bar(genre_list, critic_score_list, width=0.5)
+    plt.bar(genre_list, critic_score_list, width=0.5, color= colors_list)
     plt.show()
 
-def sales_world():
-
-    #Creating a List of total sales per genre
-    total_sales_list = []
-    for j in genre_list:
-        sum = 0
-        for i in range(no_of_rows):
-            if j == vg_df.at[i,'Genre']:
-                num = int(vg_df.at[i,'Total_Sales'])
-                sum += num
-        total_sales_list.append(sum)
-
-    colors_list = ['blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'gray', 'olive', 'cyan', 'Indigo','LightSeaGreen', 'Aqua', 'CadetBlue']
-    
+# options to display graphs
+def graphs(list_option):
     while True:
         print('=============================================================')
         print('1. Display Data in the form of a line graph')
@@ -65,33 +108,31 @@ def sales_world():
         print('=============================================================')
 
         if choice == 1:
-            plt.plot(genre_list,total_sales_list)
+            plt.plot(genre_list,list_option)
             plt.show()
         elif choice == 2:
-            plt.bar(genre_list, total_sales_list, width=0.5, label = genre_list, color=colors_list)
+            plt.bar(genre_list, list_option, width=0.5, label = genre_list, color=colors_list)
             plt.legend()
             plt.show()
         elif choice == 3:        
-            plt.pie(total_sales_list, colors=colors_list)
+            plt.pie(list_option, colors=colors_list)
             plt.legend(genre_list, loc = 'upper right')
             plt.show()
         elif choice == 4:
-                plt.scatter(genre_list, total_sales_list, c=colors_list)
+                plt.scatter(genre_list, list_option, c=colors_list)
                 plt.show()
         elif choice == 5:
             plt.subplot(2,2,1)
-            plt.plot(genre_list,total_sales_list)
+            plt.plot(genre_list,list_option)
             
             plt.subplot(2,2,2)
-            plt.bar(genre_list, total_sales_list, width=0.5, label = genre_list, color=colors_list)
-            plt.legend()
+            plt.bar(genre_list, list_option, width=0.5, label = genre_list, color=colors_list)
             
             plt.subplot(2,2,3)
-            plt.pie(total_sales_list, colors=colors_list)
-            plt.legend(genre_list, loc = 'upper right')
+            plt.pie(list_option, colors=colors_list)
             
             plt.subplot(2,2,4)
-            plt.scatter(genre_list, total_sales_list, c=colors_list)
+            plt.scatter(genre_list, list_option, c=colors_list)
             
             plt.show()
         elif choice == 6:
@@ -99,65 +140,10 @@ def sales_world():
         else: 
             pass
 
-def sales_NA():
-    #Creating a List of sales in north america per genre
-    NA_sales_list = []
-    for j in genre_list:
-        sum = 0
-        for i in range(no_of_rows):
-            if j == vg_df.at[i,'Genre']:
-                num = round((vg_df.at[i,'NA_Sales']),2)
-                sum += num
-        NA_sales_list.append(sum)
-
-    plt.bar(genre_list,NA_sales_list, width=0.5)
-    plt.show()
-
-def sales_JP():
-    #Creating a List of sales in japan per genre
-    JP_sales_list = []
-    for j in genre_list:
-        sum = 0
-        for i in range(no_of_rows):
-            if j == vg_df.at[i,'Genre']:
-                num = round((vg_df.at[i,'JP_Sales']),2)
-                sum += num
-        JP_sales_list.append(sum)
-
-    plt.bar(genre_list,JP_sales_list, width=0.5)
-    plt.show()
-
-def sales_PAL():
-#Creating a List of sales in europe and africa per genre
-    PAL_sales_list = []
-    for j in genre_list:
-        sum = 0
-        for i in range(no_of_rows):
-            if j == vg_df.at[i,'Genre']:
-                num = round((vg_df.at[i,'PAL_Sales']),2)
-                sum += num
-        PAL_sales_list.append(sum)
-
-    plt.bar(genre_list,PAL_sales_list, width=0.5)
-    plt.show()
-
-def sales_other():
-    #Creating a list of sales in other parts of the world per genre
-    other_sales_list = []
-    for j in genre_list:
-        sum = 0
-        for i in range(no_of_rows):
-            if j == vg_df.at[i,'Genre']:
-                num = round((vg_df.at[i,'Other_Sales']),2)
-                sum += num
-        other_sales_list.append(sum)
-    
-    plt.bar(genre_list, other_sales_list, width=0.5)
-    plt.show()
-
+#main loop for the program
 while True:
     print('=============================================================')
-    print('1. show dataframe')
+    print('1. show first 10 rows of dataframe')
     print('2. Show Abbriviations')
     print('=============================================================')
     print('3. Genre of games sorted by Critic Score')
@@ -178,15 +164,15 @@ while True:
     elif option == 3:
         critic_score_sort()
     elif option == 4:
-        sales_world()
+        graphs(world_sales_list)
     elif option == 5:
-        sales_NA()
+        graphs(NA_sales_list)
     elif option == 6:
-        sales_JP()
+        graphs(JP_sales_list)
     elif option == 7:
-        sales_PAL()
+        graphs(PAL_sales_list)
     elif option == 8:
-        sales_other()
+        graphs(other_sales_list)
     elif option == 9:
         quit()
     else:
