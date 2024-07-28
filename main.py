@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-pathofmainfile = r'C:\Users\ksail\Documents\Python Code\School_Proj\vgchartz-2024.csv'
-pathofabbriviations = r'C:\Users\ksail\Documents\Python Code\School_Proj\data_dictionary.csv'
+pathofmainfile = r'vgchartz-2024.csv'
+pathofabbriviations = r'data_dictionary.csv'
 
 
 df = pd.read_csv(pathofmainfile)
